@@ -3,8 +3,8 @@
 
 *Dependencies:*
 - Triangle (https://www.cs.cmu.edu/~quake/triangle.html) [included]
-- Geom2D (https://in.mathworks.com/matlabcentral/fileexchange/7844-geom2d)
-- Geom3D (https://in.mathworks.com/matlabcentral/fileexchange/24484-geom3d)
+- Geom2D (https://www.mathworks.com/matlabcentral/fileexchange/7844-geom2d)
+- Geom3D (https://www.mathworks.com/matlabcentral/fileexchange/24484-geom3d)
 
 ---
 The code corrsponds to the following Computers & Graphics publication and is allowed to be used for academic and research purpose (non-commercial):  
