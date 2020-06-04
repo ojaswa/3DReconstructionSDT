@@ -3,5 +3,5 @@ Instructions to use OpenMP with Matlab (Linux specific)
 	export LD_PRELOAD=/usr/lib64/libgomp.so.1.0.0
 	export OMP_NUM_THREADS=12
 2. Start matlab
-3. Compile/run mex code
-
+3. Compile mex code
+4. Copy the generated .mexa64 file to src folder (parent)
