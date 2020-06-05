@@ -260,7 +260,7 @@ fprintf('Polytope space partitioning took: %f sec.\n', l_timeElapsed);
 %% Correctly reoient polytope faces  (face normal pointing out)
 for i=1: size(g_partitions, 2)
     l_polytope = g_partitions{i};
-    l_normals = faceNormal(l_polytope.vertices, l_polytope.faces);
+    l_normals = meshFaceNormals(l_polytope.vertices, l_polytope.faces);
     l_polytope_centre = sum(l_polytope.vertices, 1)/size(l_polytope.vertices, 1);
     for j=1:size(l_polytope.faces, 2)
         l_face_vertices  = l_polytope.vertices(l_polytope.faces{j}, :);
@@ -271,7 +271,7 @@ for i=1: size(g_partitions, 2)
             if(verbose), fprintf('Reoriented face %d on polytope %d\n', j, i); end
         end
     end
-    l_polytope.normals = faceNormal(l_polytope.vertices, l_polytope.faces); % Store updated normals
+    l_polytope.normals = meshFaceNormals(l_polytope.vertices, l_polytope.faces); % Store updated normals
     g_partitions{i} = l_polytope;
 end
 
