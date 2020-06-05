@@ -2,7 +2,8 @@
 3D reconstruction from unorganized planar cross-sections
 
 *Dependencies:*
-- Triangle (https://www.cs.cmu.edu/~quake/triangle.html) [included]
+- Triangle (https://www.cs.cmu.edu/~quake/triangle.html)  
+  - Compile and copy the 'triangle' executable in src folder
 - Geom2D (https://www.mathworks.com/matlabcentral/fileexchange/7844-geom2d)
 - Geom3D (https://www.mathworks.com/matlabcentral/fileexchange/24484-geom3d)
 
