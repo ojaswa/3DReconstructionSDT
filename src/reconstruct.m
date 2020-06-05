@@ -703,7 +703,7 @@ fprintf('Computing MVC: ');
 tic
 % For all partitions
 for n = 1:size(g_partitions,2)
-    fprintf('%d \n',n);
+    fprintf('%d ',n);
     % Prepare mesh data for MVC computation
     l_polytope = g_partitions{n};
     l_nnodes =  sum(cell2mat(cellfun(@(x) size(x, 1), l_polytope.triangulated_nodes, 'UniformOutput', false)));
@@ -751,7 +751,7 @@ for n = 1:size(g_partitions,2)
     end
 end
 l_timeElapsed = toc;
-fprintf('MVC interpolation (CPU) took: %f sec.\n', l_timeElapsed);
+fprintf('\nMVC interpolation (CPU) took: %f sec.\n', l_timeElapsed);
 
 %% Step 6: Extract reconstructed object using Marching cubes
 figure; 
