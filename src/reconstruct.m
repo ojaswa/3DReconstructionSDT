@@ -655,9 +655,9 @@ clear grad_x grad_y grad_mag l_nan i;
 
 %% Step 5 (a): Interpolate distance values inside polytopes (at regular grid points) using MVC for meshes
 % Create a sample grid of points
-l_max_dim = max(g_model.bbox(2,:) - g_model.bbox(1,:));
-g_max_res = 100;   % Resolution along the maximum dimension
-l_grid_delta = l_max_dim / (g_max_res - 1 + 2);
+l_min_dim = min(g_model.bbox(2,:) - g_model.bbox(1,:));
+g_min_res = 100;   % Resolution along the minimum dimension
+l_grid_delta = l_min_dim / (g_min_res - 1 + 2);
 
 g_x_vec = g_model.bbox(1,1):l_grid_delta:g_model.bbox(2,1);
 g_x_vec([1, end]) = [];
