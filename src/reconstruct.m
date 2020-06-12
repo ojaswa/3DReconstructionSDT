@@ -40,28 +40,19 @@ g_model.bbox = l_tmp(:,1:3);
 for i=1:size(l_section_names,1)
     l_section = read_wobj(l_section_names{i});
     g_sections{i}.vertices = l_section.vertices;
-    l_lines = [l_section.objects.data];
+    if iscell([l_section.objects.data])
+        l_lines = cell2mat([l_section.objects.data]);
+    else
+        l_lines = [l_section.objects.data];
+    end
     l_lines = [l_lines.vertices];
     g_sections{i}.raw_lines = [l_lines(1:2:(end-1))' l_lines(2:2:end)'];
     
     % Find plane equation
-    [~, l_idx1] = max(dot(l_section.vertices, l_section.vertices, 2));
-    l_verts_temp = l_section.vertices;
-    l_verts_temp(l_idx1,:) = [];
-    [~, l_idx2] = max(dot(l_verts_temp, l_verts_temp, 2));
-    
-    if(l_idx1 == l_idx2)
-        l_idx2 = l_idx2 + 1;
-    end
-    
-    l_a = l_section.vertices(1,:);
-    l_b = l_section.vertices(l_idx1,:);
-    l_c = l_section.vertices(l_idx2,:);
-    ab = [l_b(1)-l_a(1) l_b(2)-l_a(2) l_b(3)-l_a(3)];
-    ac = [l_c(1)-l_a(1) l_c(2)-l_a(2) l_c(3)-l_a(3)];
-    pts = cross(ab,ac);
-    d = -(pts(1)*l_a(1) + pts(2)*l_a(2) + pts(3)*l_a(3));
-    g_sections{i}.plane = [pts(1) pts(2) pts(3) d];
+    plane  = fitPlane(l_section.vertices);
+    nrm = cross(plane(4:6), plane(7:9));
+    d = -dot(nrm, plane(1:3));
+    g_sections{i}.plane = [nrm, d];
 end
 
 %% Find Plane coordiantes (A,B,C,D)
@@ -260,7 +251,7 @@ fprintf('Polytope space partitioning took: %f sec.\n', l_timeElapsed);
 %% Correctly reoient polytope faces  (face normal pointing out)
 for i=1: size(g_partitions, 2)
     l_polytope = g_partitions{i};
-    l_normals = meshFaceNormals(l_polytope.vertices, l_polytope.faces);
+    l_normals = faceNormal(l_polytope.vertices, l_polytope.faces);
     l_polytope_centre = sum(l_polytope.vertices, 1)/size(l_polytope.vertices, 1);
     for j=1:size(l_polytope.faces, 2)
         l_face_vertices  = l_polytope.vertices(l_polytope.faces{j}, :);
@@ -271,7 +262,7 @@ for i=1: size(g_partitions, 2)
             if(verbose), fprintf('Reoriented face %d on polytope %d\n', j, i); end
         end
     end
-    l_polytope.normals = meshFaceNormals(l_polytope.vertices, l_polytope.faces); % Store updated normals
+    l_polytope.normals = faceNormal(l_polytope.vertices, l_polytope.faces); % Store updated normals
     g_partitions{i} = l_polytope;
 end
 
